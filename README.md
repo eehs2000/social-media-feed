@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐦 소셜 미디어 피드 프론트엔드
 
-## Getting Started
+트위터/X와 유사한 소셜 미디어 피드 서비스의 프론트엔드 구현
 
-First, run the development server:
+## 🚀 실행 방법
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ 사용한 기술 스택 및 선택 이유
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 15**: React 기반의 풀스택 프레임워크, 최신 기능과 성능 최적화
+- **React 19**: 최신 React 버전으로 향상된 성능과 개발 경험
+- **TypeScript**: 타입 안정성과 개발 생산성 향상
+- **Tailwind CSS**: 유틸리티 퍼스트 CSS 프레임워크로 빠른 스타일링
+- **Lucide React**: 일관된 아이콘 시스템
+- **date-fns**: 날짜 처리를 위한 경량 라이브러리
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✅ 구현한 기능 목록
 
-## Learn More
+### 🎯 핵심 요구사항
 
-To learn more about Next.js, take a look at the following resources:
+- **메인 피드 화면 (/)**: 게시물 리스트 무한 스크롤
+- **게시물 카드**: 작성자 정보, 내용, 이미지, 상대적 시간, 상호작용 버튼
+- **게시물 작성 모달**: 텍스트 입력, 이미지 첨부, 280자 제한, 실시간 카운터
+- **상호작용 기능**: 좋아요/리트윗 시스템, 낙관적 업데이트
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📱 추가 구현 기능
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **반응형 디자인**: 모바일과 데스크톱 대응
+- **로딩 상태**: 스켈레톤 로딩 및 무한 스크롤 로딩 인디케이터
+- **사용자 경험**: 호버 효과, 애니메이션, 직관적 인터랙션
 
-## Deploy on Vercel
+## 🧪 테스트 케이스 통과 현황
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Easy Level
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- ✅ 게시물 리스트 정상 로드
+- ✅ 무한 스크롤 작동
+- ✅ 상대적 시간 표시 ("3분 전", "1시간 전")
+- ✅ 좋아요 버튼 정상 작동
+- ✅ 리트윗 버튼 정상 작동
+- ✅ 게시물 작성 시 280자 제한
+- ❌ 검색 기능 (미구현)
+- ❌ 해시태그 클릭 시 검색 결과 표시 (미구현)
+- ✅ 반응형 디자인 모바일 대응
+- ❌ 다크/라이트 모드 전환 (미구현)
+
+### 추가 구현된 기능들
+
+- ✅ 게시물 작성 기능 (풀스크린 모달)
+- ✅ 이미지 첨부 및 미리보기 (실제 파일 업로드)
+- ✅ 낙관적 업데이트
+- ✅ 텍스트 하이라이팅 (해시태그/멘션)
+- ✅ 이미지 Lazy Loading
+- ✅ X(트위터) 스타일 UI/UX
+
+## 🤔 기술적 고민과 해결 과정
+
+### 1. 상태 관리 방식
+
+**고민**: Context API vs 외부 상태 관리 라이브러리
+**선택**: React 내장 useState/useEffect 조합
+**이유**: 단일 페이지 애플리케이션으로 복잡도가 낮아 과도한 도구 사용보다 단순함을 선택
+
+### 2. 무한 스크롤 구현
+
+**고민**: Intersection Observer vs 스크롤 이벤트
+**선택**: 스크롤 이벤트 + throttling
+**이유**: 구현 복잡도와 브라우저 호환성을 고려하여 안정적인 방법 선택
+
+### 3. 이미지 처리
+
+**고민**: 실제 파일 업로드 vs URL 기반 시뮬레이션
+**선택**: FileReader API를 활용한 실제 파일 업로드 구현
+**이유**: 더 완전한 사용자 경험 제공, 드래그 앤 드롭까지 지원하여 실제 서비스와 동일한 UX
+
+### 4. 텍스트 하이라이팅 구현
+
+**고민**: 단순 텍스트 vs 해시태그/멘션 파싱
+**선택**: 정규식 기반 텍스트 파싱 + React 컴포넌트 분할
+**이유**: 소셜미디어의 핵심 기능, 사용자 경험 크게 향상
+
+### 5. 이미지 지연 로딩 전략
+
+**고민**: 모든 이미지 즉시 로딩 vs Lazy Loading
+**선택**: Intersection Observer + 커스텀 LazyImage 컴포넌트
+**이유**: 성능 최적화 및 네트워크 자원 절약
+
+## 💡 추가 구현한 기능
+
+### ✨ 과제 추가 개선 아이디어에서 구현한 기능들
+
+**UX 개선**
+
+- **스켈레톤 로딩 적용**: 게시물 로딩 시 스켈레톤 UI 표시
+
+**기술적 개선**
+
+- **TypeScript 적용**: 전체 프로젝트 TypeScript로 구현
+
+**고급 기능**
+
+- **이미지 lazy loading**: Intersection Observer 기반 지연 로딩
+- **텍스트 하이라이팅 (해시태그, 멘션)**: 정규식 기반 파싱 및 하이라이트
+
+### 🎨 추가로 구현한 기능들
+
+- **X(트위터) 스타일 디자인**: 실제 X 앱과 유사한 레이아웃과 인터랙션
+- **스크롤 반응형 헤더**: 스크롤 시 헤더 숨김/표시 애니메이션
+- **플로팅 작성 버튼**: 우하단 고정 버튼 + 스크롤 반응 opacity 효과
